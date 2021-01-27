@@ -2,9 +2,9 @@ const sql = require("./db.js");
 
 // constructor
 const Book = function(book) {
-  this.nom = book.nom;
-  this.auteur = book.auteur;
-  this.datePublication = book.datePublication;
+  this.name = book.name;
+  this.autor = book.autor;
+  this.year = book.year;
 };
  Book.create = (newBook, result) => {
   sql.query("INSERT INTO book SET ?", newBook, (err, res) => {
@@ -36,6 +36,42 @@ const Book = function(book) {
     result({ kind: "not_found" }, null);
   });
 };
+Book.findByAutor = (autor, result) => {
+  sql.query(`SELECT * FROM book WHERE autor = "${autor}"`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found: ", res);
+      result(null, res);
+      return;
+    }
+
+    // not found Book with the autor
+    result({ kind: "not_found" }, null);
+  });
+};
+Book.findByYear = (year, result) => {
+  sql.query(`SELECT * FROM book WHERE year = "${year}"`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found: ", res);
+      result(null, res);
+      return;
+    }
+
+    // not found Book with the year
+    result({ kind: "not_found" }, null);
+  });
+};
  Book.getAll = result => {
   sql.query("SELECT * FROM book", (err, res) => {
     if (err) {
@@ -50,8 +86,8 @@ const Book = function(book) {
 };
  Book.updateById = (id, book, result) => {
   sql.query(
-    "UPDATE book SET nom = ?, auteur = ?, datePublication = ? WHERE id = ?",
-    [book.nom, book.auteur, book.datePublication, id],
+    "UPDATE book SET name = ?, autor = ?, year = ? WHERE id = ?",
+    [book.name, book.autor, book.year, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

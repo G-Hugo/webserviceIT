@@ -11,9 +11,9 @@ exports.create = (req, res) => {
 
   // Create a Book
   const book = new Book({
-    nom: req.body.nom,
-    auteur: req.body.auteur,
-    datePublication: req.body.datePublication
+    name: req.body.name,
+    autor: req.body.autor,
+    year: req.body.year
   });
 
   // Save Book in the database
@@ -37,6 +37,40 @@ exports.findAll = (req, res) => {
           });
         else res.send(data);
       });
+};
+
+// Find Book with the autor
+exports.findAllByAutor = (req, res) => {
+  Book.findByAutor(req.params.autor, (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Book with autor ${req.params.autor}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error retrieving Book with autor " + req.params.autor
+          });
+        }
+      } else res.send(data);
+    });
+};
+
+// Find Book with a year
+exports.findAllByYear = (req, res) => {
+  Book.findByYear(req.params.year, (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Book with year ${req.params.year}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error retrieving Book with year " + req.params.year
+          });
+        }
+      } else res.send(data);
+    });
 };
 
 // Find a single Book with a id
