@@ -7,8 +7,8 @@ module.exports = app => {
     // Retrieve all books
     app.get("/book", book.findAll);
 
-     // Retrieve Book with autor
-    app.get("/book/autor/:autor", book.findAllByAutor);
+     // Retrieve Book with author
+    app.get("/book/author/:author", book.findAllByAuthor);
 
     // Retrieve Book with datePublication
     app.get("/book/date/:year", book.findAllByYear);

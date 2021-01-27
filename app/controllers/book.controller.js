@@ -12,7 +12,7 @@ exports.create = (req, res) => {
   // Create a Book
   const book = new Book({
     name: req.body.name,
-    autor: req.body.autor,
+    author: req.body.author,
     year: req.body.year
   });
 
@@ -39,17 +39,17 @@ exports.findAll = (req, res) => {
       });
 };
 
-// Find Book with the autor
-exports.findAllByAutor = (req, res) => {
-  Book.findByAutor(req.params.autor, (err, data) => {
+// Find Book with the author
+exports.findAllByAuthor = (req, res) => {
+  Book.findByAuthor(req.params.author, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found Book with autor ${req.params.autor}.`
+            message: `Not found Book with author ${req.params.author}.`
           });
         } else {
           res.status(500).send({
-            message: "Error retrieving Book with autor " + req.params.autor
+            message: "Error retrieving Book with author " + req.params.author
           });
         }
       } else res.send(data);

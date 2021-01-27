@@ -3,7 +3,7 @@ const sql = require("./db.js");
 // constructor
 const Book = function(book) {
   this.name = book.name;
-  this.autor = book.autor;
+  this.author = book.author;
   this.year = book.year;
 };
  Book.create = (newBook, result) => {
@@ -36,8 +36,8 @@ const Book = function(book) {
     result({ kind: "not_found" }, null);
   });
 };
-Book.findByAutor = (autor, result) => {
-  sql.query(`SELECT * FROM book WHERE autor = "${autor}"`, (err, res) => {
+Book.findByAuthor = (author, result) => {
+  sql.query(`SELECT * FROM book WHERE author = "${author}"`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -50,7 +50,7 @@ Book.findByAutor = (autor, result) => {
       return;
     }
 
-    // not found Book with the autor
+    // not found Book with the author
     result({ kind: "not_found" }, null);
   });
 };
@@ -86,8 +86,8 @@ Book.findByYear = (year, result) => {
 };
  Book.updateById = (id, book, result) => {
   sql.query(
-    "UPDATE book SET name = ?, autor = ?, year = ? WHERE id = ?",
-    [book.name, book.autor, book.year, id],
+    "UPDATE book SET name = ?, author = ?, year = ? WHERE id = ?",
+    [book.name, book.author, book.year, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
